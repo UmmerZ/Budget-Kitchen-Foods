@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import { ApolloProvider } from "@apollo/client"
+import client from "../src/components/index"
+import Dashboard from "./components/Dashboard"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import AuthProvider from "./components/auth/AuthContext"
+import PrivateRoute from "../src/components/auth/privateRoute"
+import Login from "../src/components/auth/Login"
+import CreateUser from "./components/auth/CreateUser"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <AuthProvider>
+      <ApolloProvider client={client}>
+        <Router>
+          <Switch>
+            <PrivateRoute exact path="/" component={Dashboard} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={CreateUser} />
+          </Switch>
+        </Router>
+      </ApolloProvider>
+    </AuthProvider>
+  )
 }
 
-export default App;
+export default App
