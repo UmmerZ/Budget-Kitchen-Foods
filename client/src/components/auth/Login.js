@@ -1,18 +1,22 @@
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { Button, Grid, TextField } from "@material-ui/core"
 import { Alert } from "@material-ui/lab"
 import { useAuth } from "./AuthContext"
 import { useHistory } from "react-router-dom"
+import Loading from "../Loading"
 
 export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const passwordRef = useRef()
   const { login } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
+
+  if (loading) {
+    return <Loading />
+  }
 
   async function handleSubmit(e) {
     e.preventDefault()

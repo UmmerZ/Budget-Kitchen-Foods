@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { AppBar, Toolbar, Button, makeStyles, List } from "@material-ui/core"
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  makeStyles,
+  List,
+  Typography,
+} from "@material-ui/core"
 import HomeIcon from "@material-ui/icons/Home"
 import MenuIcon from "@material-ui/icons/Menu"
 import { useAuth } from "./auth/AuthContext"
 
 export default function Navbar() {
-  const { logout } = useAuth()
+  const { logout, currentUser } = useAuth()
   const useStyle = makeStyles(theme => ({
     buttons: {
       margin: "0 10px 0 5px",
@@ -41,9 +48,7 @@ export default function Navbar() {
       color: "#ffffff",
     },
     navLeft: {},
-    navRight: {
-      float: "right",
-    },
+    navRight: { float: "right" },
     navContainer: {
       flexGrow: 1,
     },
@@ -127,6 +132,7 @@ export default function Navbar() {
         </Button>
 
         <div className={classes.navRight}>
+          <Typography>{currentUser.email}</Typography>
           <Button
             className={classes.buttons}
             color="inherit"
