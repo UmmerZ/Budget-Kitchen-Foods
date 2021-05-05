@@ -3,9 +3,6 @@ import pkg from "apollo-server-express"
 const { gql } = pkg
 
 const typeDefs = gql`
-  enum Media {
-    Image
-  }
   type User {
     _id: ID
     name: String
@@ -18,7 +15,7 @@ const typeDefs = gql`
     name: String
     price: Float
     category: [Category]
-    img: [Media]
+    img: [File]
   }
   type Dealer {
     _id: ID
@@ -47,6 +44,12 @@ const typeDefs = gql`
     name: String
     menus: [Menu]
   }
+  type File {
+    _id: ID!
+    filename: String!
+    mimetype: String!
+    path: String!
+  }
   type Query {
     Menus: [Menu]
     Orders: [Order]
@@ -54,11 +57,19 @@ const typeDefs = gql`
     Dealers: [Dealer]
     Categories: [Category]
     Users: [User]
+    Files: [File]
   }
   type Mutation {
     createMenu(name: String, price: Float): Menu
     createOrder: Order
-    createUser: User
+    createUser(
+      name: String
+      email: String
+      phone: Int
+      address: String
+      type: String
+    ): User
+    uploadFile(file: Upload!): File
     createCategory: Category
   }
 `
